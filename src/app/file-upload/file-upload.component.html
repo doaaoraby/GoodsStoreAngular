@@ -11,11 +11,6 @@
             Upload
         </button>
     </div>
-
-    <div class="container text-center jumbotron" *ngIf="shortLink">
-        <h2> Visit Here</h2>
-        <a href="{{shortLink}}">{{shortLink}}</a>
-    </div>
     
     <!--Flag variable is used here-->
     <div class="container" *ngIf="loading">
@@ -23,15 +18,12 @@
     </div>
 </div>
 <div *ngIf="afterUpload">
-    <!-- <app-user-inputs (myOutput)="hi($event)" *ngIf="afterUpload"></app-user-inputs> -->
     <form class="example-form">
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Enter Good Id</mat-label>
           <input matInput placeholder="Ex. 54" [(ngModel)]="goodId" name="id">
         </mat-form-field>
-        <div *ngIf="errorMsg" style="color:red;">
-            <strong style="color:red;">Error!</strong> {{errorMsg}}
-          </div>
+        
         <div>
         <mat-form-field appearance="fill">
             <mat-label>Enter a date range</mat-label>
@@ -46,13 +38,16 @@
             <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
             <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
           </mat-form-field>
+        </div>
           <button (click)="showData()" mat-stroked-button color="primary">
             Show Data
         </button>
-    </div>
       </form>
 </div>
+<div *ngIf="errorMsg" style="color:red;">
+    <strong style="color:red;">Error!</strong> {{errorMsg}}
+</div>
 <div >
-    <app-output-table [goodsTable]="goods"></app-output-table>
+    <app-output-table [goodsTable]="goods" [calculations]="calcs"></app-output-table>
 
 </div>

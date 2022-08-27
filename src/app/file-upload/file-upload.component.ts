@@ -1,6 +1,6 @@
 import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 import { FileUploadService } from '../file-upload.service';
-import {GoodsModel,ReturnedDataModel} from '../models/goods-model'
+import {GoodsModel} from '../models/goods-model'
 import {FormGroup, FormControl} from '@angular/forms';
 
 @Component({
@@ -10,7 +10,6 @@ import {FormGroup, FormControl} from '@angular/forms';
 })
 export class FileUploadComponent implements OnInit {
   
-  shortLink: string = "";  
   loading: boolean = false; // Flag variable
   file: File = null as unknown as File; // Variable to store file
   goods:GoodsModel[]=[];
@@ -23,10 +22,11 @@ export class FileUploadComponent implements OnInit {
   errorMsg:string="";
   transNum:number=0;
   range = new FormGroup({
-    start: new FormControl<Date | null>(null),
-    end: new FormControl<Date | null>(null) });
-  //@Output() myOutput:EventEmitter<any>= new EventEmitter();  
-
+  start: new FormControl<Date | null>(null),
+  end: new FormControl<Date | null>(null) });
+  calcs= new Map<string, number>(); 
+  inAmount:number=0;
+  outAmount:number=0; 
     constructor(private fileUploadService: FileUploadService) { }
   
     ngOnInit(): void {
@@ -37,48 +37,61 @@ export class FileUploadComponent implements OnInit {
     }
     // OnClick of button Upload
     onUpload() {
-        this.loading = !this.loading;
-        this.fileUploadService.getGoods(this.file).subscribe(
-        (x:any)=>{
-          console.log(x)
-                this.goodsList=x;
-                this.loading = false; // Flag variable 
-                this.isLoaded=true;
-                this.afterUpload=true;
-            }
-        )
+        if (this.file==null){
+          this.errorMsg="Please upload a file"
+        }
+        else{
+          this.errorMsg="";
+          this.loading = !this.loading;
+          this.fileUploadService.getGoods(this.file).subscribe(
+            (x:any)=>{
+              this.goodsList=x;
+              this.loading = false; // Flag variable 
+              this.isLoaded=true;
+              this.afterUpload=true;
+                }
+            )
+        }
+       
     }
     showData(){
       console.log("hnaa",this.goodsList)
-      if (this.goodsList.includes(Number(this.goodId))){
-        console.log(this.goodId,this.fromDate,this.toDate)
+      if (!this.goodsList.includes(Number(this.goodId)) || this.goodId==null){
+        this.errorMsg="the good ID you entered doesn't exist in the file";
+        
+      }
+      else{
+        this.errorMsg="";
         this.fileUploadService.getData(String(this.goodId), this.fromDate,this.toDate).
         subscribe(
-          (x:any)=>{//goodsIDs, dateRange
-            console.log(x)
+          (x:any)=>{
             this.goods=x;
-            console.log(this.goods)
-            // this.loading = false; // Flag variable 
+            this.setAmounts();
             this.isLoaded=true;
-            this.transNum=this.goods.length;
-            //this.afterUpload=true;
         } ,
         (error:any) => {                              
           console.error('error caught in component')
-          this.errorMsg = "far date range provided";
+          this.goods=[];
+          this.errorMsg = "No data available for the date range provided";
           this.loading = false;
           throw error;
         })
-      }
-      else{
-        this.errorMsg="the good ID you entered doesn't exist in the file";
       } 
     }
-    // hi(event:any){
-    // this.goodId=event.goodId;
-    // this.fromDate=event.fromDate;
-    // this.toDate=event.toDate;
-    // console.log("in hiii",this.goodId,this.fromDate,this.toDate)
-    // }
-   
-    }
+  
+   setAmounts(){
+    this.inAmount=0;
+    this.outAmount=0;
+    this.goods.forEach( (good) => {
+      if (good.direction=="In"){
+        this.inAmount+=Number(good.amount)
+      }
+      else if (good.direction=="Out"){
+        this.outAmount+=Number(good.amount)
+      }
+    });
+    this.calcs.set("transNum",this.goods.length)
+    this.calcs.set("inAmount",this.inAmount)
+    this.calcs.set("remainAmount",this.inAmount-this.outAmount)
+   }
+ }

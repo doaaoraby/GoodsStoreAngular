@@ -10,12 +10,3 @@ export class GoodsModel {
     
     }
 }
-
-export class ReturnedDataModel {
-    constructor(   
-        public goodsIDs: GoodsModel[],
-        public dateRange:number,
-        ) { 
-    
-    }
-}

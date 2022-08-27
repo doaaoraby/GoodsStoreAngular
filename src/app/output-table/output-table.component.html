@@ -31,11 +31,12 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
-
   </table>
 
-  <p *ngIf="goodsTable" color="primary">
-   {{totalNum}}
-</p>
+  <div *ngIf="goodsTable.length!=0" class="footer">
+    <span style="margin: 10px;">Number of Transactions {{calculations.get('transNum')}}</span>
+    <span style="margin: 10px;">Total Amount {{calculations.get('inAmount')}}</span>
+    <span style="margin: 10px;">Remaining Amount {{calculations.get('remainAmount')}}</span>
+    
+</div>
 

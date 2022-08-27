@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient,HttpParams,HttpErrorResponse} from '@angular/common/http';
-import {GoodsModel,ReturnedDataModel} from './models/goods-model'
+import {GoodsModel} from './models/goods-model'
 import {Observable, throwError} from 'rxjs';
 import { DatePipe } from '@angular/common'
 import {retry, catchError } from 'rxjs/operators';

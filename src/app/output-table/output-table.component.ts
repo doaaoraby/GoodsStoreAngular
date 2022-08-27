@@ -19,6 +19,8 @@ export interface PeriodicElement {
 
 export class OutputTableComponent implements OnInit {
   @Input() goodsTable:GoodsModel[]=[];
+  @Input() calculations = new Map<string, number>();
+  
   //isLoaded:boolean=false;
   displayedColumns: string[] = ['goodId','transactionId','transactionDate','amount','direction','comments'];
   totalNum:number=this.goodsTable.length;
@@ -37,8 +39,6 @@ export class OutputTableComponent implements OnInit {
   public checkIfLoaded():boolean{
     return this._fileCompnt.isLoaded;
   }
- 
-  
  }
 
 
