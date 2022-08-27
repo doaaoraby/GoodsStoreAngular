@@ -1,0 +1,41 @@
+<table mat-table [dataSource]="goodsTable" class="mat-elevation-z8" *ngIf="goodsTable.length!=0">
+    <ng-container matColumnDef="goodId">
+      <th mat-header-cell *matHeaderCellDef> Good ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.goodId}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="transactionId">
+      <th mat-header-cell *matHeaderCellDef> Transaction ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.transactionId}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="transactionDate">
+      <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.transactionDate}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef> Amount </th>
+      <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+    </ng-container>
+   
+
+    <ng-container matColumnDef="direction">
+      <th mat-header-cell *matHeaderCellDef> Direction </th>
+      <td mat-cell *matCellDef="let element"> {{element.direction}} </td>
+    </ng-container>
+    <ng-container matColumnDef="comments">
+      <th mat-header-cell *matHeaderCellDef> Comments </th>
+      <td mat-cell *matCellDef="let element"> {{element.comments}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+
+  </table>
+
+  <p *ngIf="goodsTable" color="primary">
+   {{totalNum}}
+</p>
+
