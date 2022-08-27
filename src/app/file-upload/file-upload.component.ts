@@ -46,7 +46,7 @@ export class FileUploadComponent implements OnInit {
           this.fileUploadService.getGoods(this.file).subscribe(
             (x:any)=>{
               this.goodsList=x;
-              this.loading = false; // Flag variable 
+              this.loading = false; 
               this.isLoaded=true;
               this.afterUpload=true;
                 }

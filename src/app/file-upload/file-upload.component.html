@@ -1,18 +1,11 @@
 <div *ngIf="!afterUpload">
     <div class="text-center">
-        <section>
-            <div class="example-button-row"> 
-            </div>
-          </section>
-          
         <input class="form-control" type="file" (change)="onChange($event)" >
-    
         <button (click)="onUpload()" mat-stroked-button color="primary">
             Upload
         </button>
     </div>
     
-    <!--Flag variable is used here-->
     <div class="container" *ngIf="loading">
         <h3>Loading ...</h3>
     </div>

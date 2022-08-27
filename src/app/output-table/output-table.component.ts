@@ -1,4 +1,4 @@
-import { Component, OnInit,OnChanges,Input ,SimpleChanges } from '@angular/core';
+import { Component, OnInit,OnChanges,Input } from '@angular/core';
 import {GoodsModel} from '../models/goods-model'
 import {FileUploadService} from '../file-upload.service'
 import {FileUploadComponent} from '../file-upload/file-upload.component'
@@ -24,22 +24,15 @@ export class OutputTableComponent implements OnInit {
   //isLoaded:boolean=false;
   displayedColumns: string[] = ['goodId','transactionId','transactionDate','amount','direction','comments'];
   totalNum:number=this.goodsTable.length;
-  constructor(private _file:FileUploadService,private _fileCompnt:FileUploadComponent) { 
+  constructor() { 
     
   }
-  ngOnChanges (changes: SimpleChanges) {
+  ngOnChanges () {
 
   }
   ngOnInit(): void {
-  this.totalNum=this.goodsTable.length;
   }
-  public getGoods():GoodsModel[]{
-    return this._file.goods;
-  }
-  public checkIfLoaded():boolean{
-    return this._fileCompnt.isLoaded;
-  }
- }
+}
 
 
 
